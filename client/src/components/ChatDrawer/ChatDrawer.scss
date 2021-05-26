@@ -1,0 +1,11 @@
+.chat-drawer {
+	height: calc(100% - 56px) !important;
+}
+
+.chat-input-field {
+	position: fixed;
+	bottom: 0;
+	right: 1px;
+	width: inherit;
+	text-align: center;
+}

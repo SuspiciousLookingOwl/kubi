@@ -1,0 +1,34 @@
+{
+	"name": "kubi-server",
+	"version": "0.0.1",
+	"description": "Server app for Kubi",
+	"main": "dist/index.js",
+	"scripts": {
+		"dev": "tsc-watch --onSuccess \"node .\"",
+		"build": "tsc",
+		"run": "node .",
+		"init:db": "node ./scripts/initDB.js",
+		"test": "jest"
+	},
+	"author": "",
+	"license": "MIT",
+	"dependencies": {
+		"knex": "^0.95.4",
+		"nanoid": "^3.1.22",
+		"nanoid-dictionary": "^4.3.0",
+		"objection": "^2.2.15",
+		"sqlite3": "^5.0.2",
+		"uWebSockets.js": "uNetworking/uWebSockets.js#v19.2.0",
+		"winston": "^3.3.3"
+	},
+	"devDependencies": {
+		"@types/nanoid-dictionary": "^4.2.0",
+		"@types/node": "^15.0.2",
+		"@typescript-eslint/eslint-plugin": "^4.22.1",
+		"@typescript-eslint/parser": "^4.22.1",
+		"eslint": "^7.25.0",
+		"prettier": "^2.2.1",
+		"tsc-watch": "^4.2.9",
+		"typescript": "^4.2.4"
+	}
+}

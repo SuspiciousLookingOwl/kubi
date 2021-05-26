@@ -1,0 +1,21 @@
+.deck {
+	width: 100%;
+	margin: 10px auto;
+	padding: 10px 40px;
+	text-align: center;
+	box-sizing: border-box;
+}
+
+.deck .card {
+	margin: 8px;
+}
+
+.deck .card:hover {
+	top: -5px;
+	box-shadow: 2px 2px 8px 3px #333;
+	z-index: 20;
+}
+
+.card-icon {
+	padding-bottom: 10px;
+}

@@ -1,0 +1,50 @@
+$light: #fdfdfd;
+$dark: #111111;
+
+$sm-width: 150px;
+$lg-width: 300px;
+
+.card {
+	box-sizing: border-box;
+	display: inline-block;
+	border-radius: 10px;
+	text-align: left;
+	position: relative;
+	transition: all 0.5s;
+	margin-bottom: 10px;
+}
+
+.card-black {
+	color: $light;
+	background-color: $dark;
+}
+
+.card-white {
+	color: $dark;
+	background-color: $light;
+}
+
+.card-sm {
+	width: $sm-width;
+	height: calc(#{$sm-width}* 3 / 2);
+	font-size: 12pt;
+	font-weight: 600;
+	box-shadow: 1px 1px 3px 2px #555;
+}
+
+.card-sm > .card-content {
+	padding: 12px 10px;
+}
+
+.card-lg {
+	width: $lg-width;
+	height: calc(#{$lg-width} * 3 / 2);
+	font-size: 18pt;
+	line-height: 32pt;
+	font-weight: bold;
+	box-shadow: 2px 2px 5px 3px #555;
+}
+
+.card-lg > .card-content {
+	padding: 16px;
+}
