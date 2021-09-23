@@ -1,41 +1,33 @@
 import React from "react";
-import { Box, ListItem, ListItemText, Paper, Typography } from "@material-ui/core";
 import "./ChatBubble.scss";
 
-import { IChat } from "interfaces";
+import { IGroupedChat } from "interfaces";
 
-function ChatBubble({ player, content, time }: IChat): JSX.Element {
+function ChatBubble({ player, contents, time }: IGroupedChat): JSX.Element {
 	return (
-		<ListItem dense alignItems="flex-start">
-			<ListItemText
-				primary={
-					player ? (
-						<React.Fragment>
-							<Box mr={1} display="inline">
-								<b>{player.name}</b>
-							</Box>
-							<Typography component="span" variant="caption" display="inline" color="textSecondary">
-								{time.toTimeString().split(" ")[0]}
-							</Typography>
-						</React.Fragment>
-					) : undefined
-				}
-				secondaryTypographyProps={{ component: "span" }}
-				secondary={
-					player ? (
-						<Paper className="chat-bubble" elevation={0}>
-							<Typography component="span" variant="body2" color="textPrimary">
-								{content}
-							</Typography>
-						</Paper>
-					) : (
-						<Typography component="span" variant="body2" color="textPrimary">
-							<b>{content}</b>
-						</Typography>
-					)
-				}
-			/>
-		</ListItem>
+		<div className={`flex ${player?.self ? "justify-end" : !player ? "justify-center" : ""}`}>
+			{player ? (
+				<div>
+					{!player.self && <div className="text-sm text-gray-700">{player.name}</div>}
+					<div className="">
+						{contents.map((c, i) => (
+							<div
+								key={i}
+								className={`chat-bubble ${player.self ? "self-chat-bubble" : "other-chat-bubble"}`}
+							>
+								{c}
+							</div>
+						))}
+					</div>
+					<div className="text-xs px-1 text-gray-500">{time.toLocaleTimeString()}</div>
+				</div>
+			) : (
+				<div className="text-center my-1">
+					<div className="font-medium">{contents[0]}</div>
+					{/* <div className="text-xs px-1 text-gray-500">{time.toLocaleTimeString()}</div> */}
+				</div>
+			)}
+		</div>
 	);
 }
 

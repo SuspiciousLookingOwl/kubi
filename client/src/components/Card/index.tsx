@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Box } from "@material-ui/core";
 import "./Card.scss";
 
 interface Props {
@@ -24,9 +23,7 @@ function Card({
 		>
 			<div className="card-content">{children}</div>
 			{bottomHover && showBottom ? (
-				<Box position="absolute" bottom={0} width="inherit">
-					{bottomHover}
-				</Box>
+				<div className="absolute bottom-0 w-full">{bottomHover}</div>
 			) : undefined}
 		</div>
 	);

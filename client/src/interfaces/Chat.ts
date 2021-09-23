@@ -1,9 +1,13 @@
-import Player from "./Player";
+import { IPlayer } from "interfaces";
 
-interface Chat {
-	player?: Player;
+export interface IChat {
+	player?: IPlayer;
 	content: string;
 	time: Date;
 }
 
-export default Chat;
+export interface IGroupedChat {
+	player?: IPlayer;
+	time: Date;
+	contents: string[];
+}

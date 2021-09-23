@@ -1,21 +1,13 @@
 .deck {
-	width: 100%;
-	margin: 10px auto;
-	padding: 10px 40px;
-	text-align: center;
-	box-sizing: border-box;
+	@apply grid grid-flow-col w-full box-border;
 }
 
 .deck .card {
-	margin: 8px;
+	@apply mx-2 top-0;
+	transition: top 0.25s ease 0s;
 }
 
 .deck .card:hover {
-	top: -5px;
+	@apply -top-2 z-20;
 	box-shadow: 2px 2px 8px 3px #333;
-	z-index: 20;
-}
-
-.card-icon {
-	padding-bottom: 10px;
 }

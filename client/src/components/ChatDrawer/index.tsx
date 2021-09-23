@@ -1,18 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
-import {
-	Box,
-	Divider,
-	Drawer,
-	IconButton,
-	InputAdornment,
-	List,
-	TextField,
-} from "@material-ui/core";
-import { Send } from "@material-ui/icons";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import "./ChatDrawer.scss";
 
 import ChatBubble from "./ChatBubble";
-import { IChat } from "interfaces";
+import { IChat, IGroupedChat } from "interfaces";
 
 interface Props {
 	chats: IChat[];
@@ -23,6 +13,32 @@ function ChatDrawer({ chats, onSendChat }: Props): JSX.Element {
 	const [message, setMessage] = useState("");
 	const bottomDrawer = useRef<HTMLDivElement>(null);
 	const [isScrollBottom, setIsScrollBottom] = useState(true);
+	// const [groupedChat, setGroupedChat] = useState<IGroupedChat[]>([]);
+
+	const groupedChats = useMemo(() => {
+		return chats.reduce((g, c) => {
+			const last = g[g.length - 1];
+			if (!last) {
+				g.push({
+					player: c.player,
+					contents: [c.content],
+					time: c.time,
+				});
+			} else {
+				if (c.player && last.player === c.player) {
+					last.contents.push(c.content);
+					last.time = c.time;
+				} else {
+					g.push({
+						player: c.player,
+						contents: [c.content],
+						time: c.time,
+					});
+				}
+			}
+			return g;
+		}, [] as IGroupedChat[]);
+	}, [chats]);
 
 	const sendChatHandler = () => {
 		if (!message) return;
@@ -33,53 +49,30 @@ function ChatDrawer({ chats, onSendChat }: Props): JSX.Element {
 	useEffect(() => {
 		if (!bottomDrawer?.current || !isScrollBottom) return;
 		bottomDrawer.current.scrollIntoView();
-	}, [chats]);
+	}, [groupedChats]);
 
 	return (
-		<Drawer
-			variant="permanent"
-			open
-			anchor="right"
-			PaperProps={{
-				className: "drawer chat-drawer",
-				onScroll: (e) => {
-					const el = e.target as HTMLElement;
-					setIsScrollBottom(el.scrollHeight - el.scrollTop - el.clientHeight < 100);
-				},
+		<div
+			className="chat-drawer"
+			onScroll={(e) => {
+				const el = e.target as HTMLElement;
+				setIsScrollBottom(el.scrollHeight - el.scrollTop - el.clientHeight < 100);
 			}}
 		>
-			<List>
-				{chats.map((c, i) => (
-					<ChatBubble key={i} player={c.player} content={c.content} time={c.time} />
-				))}
-				<div ref={bottomDrawer} />
-			</List>
-			<div className="chat-input-field">
-				<Divider />
-				<Box p={1} borderLeft={1} borderColor="grey.300">
-					<TextField
-						fullWidth
-						placeholder="Send a Message"
-						variant="outlined"
-						onChange={(e) => setMessage(e.target.value)}
-						value={message}
-						size="small"
-						onKeyPress={(e) => {
-							if (e.code === "Enter" || e.code === "NumpadEnter") sendChatHandler();
-						}}
-						InputProps={{
-							endAdornment: (
-								<InputAdornment position="end">
-									<IconButton onClick={sendChatHandler}>
-										<Send />
-									</IconButton>
-								</InputAdornment>
-							),
-						}}
-					/>
-				</Box>
-			</div>
-		</Drawer>
+			{groupedChats.map((c, i) => (
+				<ChatBubble key={i} player={c.player} contents={c.contents} time={c.time} />
+			))}
+			<div ref={bottomDrawer} />
+			<input
+				className="chat-input-field"
+				placeholder="Send a Message"
+				onChange={(e) => setMessage(e.target.value)}
+				value={message}
+				onKeyPress={(e) => {
+					if (e.code === "Enter" || e.code === "NumpadEnter") sendChatHandler();
+				}}
+			/>
+		</div>
 	);
 }
 

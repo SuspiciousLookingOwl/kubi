@@ -1,6 +1,4 @@
-interface Card {
+export interface ICard {
 	id: number;
 	content: string;
 }
-
-export default Card;

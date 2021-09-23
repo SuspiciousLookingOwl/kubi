@@ -1,8 +1,6 @@
-import Player from "./Player";
+import { IPlayer } from "./Player";
 
-interface RoomState {
+export interface IRoomState {
 	state: number;
-	players: Player[];
+	players: IPlayer[];
 }
-
-export default RoomState;

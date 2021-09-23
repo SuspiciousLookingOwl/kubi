@@ -1,6 +1,4 @@
 import React from "react";
-import { Button, Grid, Icon } from "@material-ui/core";
-import { Done } from "@material-ui/icons";
 import "./Deck.scss";
 
 import { ICard } from "interfaces";
@@ -15,33 +13,26 @@ interface Props {
 function Deck({ cards, onCardSelect, showActions = false }: Props): JSX.Element {
 	return (
 		<div className="deck">
-			<Grid container justify="center">
-				{cards.map((c, i) => (
-					<Grid item key={i}>
-						<Card
-							size="sm"
-							bottomHover={
-								showActions ? (
-									<Button
-										fullWidth
-										variant="text"
-										style={{ textAlign: "center" }}
-										onClick={() => {
-											if (onCardSelect) onCardSelect(c);
-										}}
-									>
-										<Icon className="card-icon">
-											<Done />
-										</Icon>
-									</Button>
-								) : undefined
-							}
-						>
-							{c.content}
-						</Card>
-					</Grid>
-				))}
-			</Grid>
+			{cards.map((c, i) => (
+				<Card
+					key={i}
+					size="sm"
+					bottomHover={
+						<React.Fragment>
+							{showActions && (
+								<button
+									className="hover:bg-gray-100 py-2 font-medium text-center w-full rounded-b-xl"
+									onClick={() => onCardSelect?.(c)}
+								>
+									Select
+								</button>
+							)}
+						</React.Fragment>
+					}
+				>
+					{c.content}
+				</Card>
+			))}
 		</div>
 	);
 }
